@@ -1,9 +1,0 @@
-name: traitlets
-channels:
-  - conda-forge
-  - conda
-dependencies:
-  - python==3.5
-  - ipython_genutils
-  - sphinx
-  - sphinx_rtd_theme

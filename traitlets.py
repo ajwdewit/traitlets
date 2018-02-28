@@ -47,7 +47,6 @@ import re
 import sys
 import types
 import enum
-import pdb
 
 try:
     from types import ClassType, InstanceType

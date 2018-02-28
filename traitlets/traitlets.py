@@ -47,7 +47,6 @@ import re
 import sys
 import types
 import enum
-import pdb
 
 try:
     from types import ClassType, InstanceType
@@ -569,16 +568,19 @@ class TraitType(BaseDescriptor):
         except:
             # if there is an error in comparing, default to notify
             silent = False
-        for change_type, handler in obj._trait_notifiers[self.name].items():
-            if change_type == All:
-                obj._notify_trait(self.name, old_value, new_value, change_type)
-            elif change_type == 'change' and silent is not True:
-                # we explicitly compare silent to True just in case the equality
-                # comparison above returns something other than True/False
-                obj._notify_trait(self.name, old_value, new_value, change_type)
-            else:
-                msg = "Unknown change for traitlet (%s) should be All or 'change'" % change_type
-                TraitError(msg)
+        
+        for name in [All, self.name]:
+            if name in obj._trait_notifiers:
+                for change_type, handler in obj._trait_notifiers[name].items():
+                    if change_type == All:
+                        obj._notify_trait(self.name, old_value, new_value, change_type)
+                    elif change_type == 'change' and silent is not True:
+                        # we explicitly compare silent to True just in case the equality
+                        # comparison above returns something other than True/False
+                        obj._notify_trait(self.name, old_value, new_value, change_type)
+                    else:
+                        msg = "Unknown change for traitlet (%s) should be All or 'change'" % change_type
+                        TraitError(msg)
 
     def __set__(self, obj, value):
         """Set the value of the trait by self.name for the instance.

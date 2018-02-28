@@ -7,7 +7,7 @@
 from __future__ import print_function
 
 # the name of the project
-name = 'traitlets'
+name = 'traitlets_pcse'
 
 #-----------------------------------------------------------------------------
 # Minimal Python version sanity check
